@@ -70,6 +70,6 @@ def detect_object_in_image(model, image):
 
 if __name__ == "__main__":
     model = initialize_detection_model()
-    image = cv.imread(r'D:\Specialization\Project\MOT\Screenshot.png')
+    image = cv.imread(r'.\Screenshot.png')
     a, b, c = detect_object_in_image(model, image)
     print(a)

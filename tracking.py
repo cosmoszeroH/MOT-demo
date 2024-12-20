@@ -304,7 +304,7 @@ def tracking_object_in_frames(vid_path, out_path, max_age=1, min_hits=3, iou_thr
 
 
 if __name__ == "__main__":
-    seq_path = r'D:\Specialization\Project\MOT\EarthCam.mp4'
+    seq_path = r'.\EarthCam.mp4'
     out_path = r'.\output'
 
     # if not os.path.exists(out_path):
