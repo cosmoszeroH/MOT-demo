@@ -1,0 +1,6 @@
+*.png 
+*.mp4 
+__pycache__/ 
+darknet/ 
+*.weights 
+img1/ 
