@@ -9,5 +9,8 @@ if uploaded_file is not None:
     with tempfile.NamedTemporaryFile(delete=False, suffix=".mp4") as temp_file:
         temp_file.write(uploaded_file.read())
         temp_path = temp_file.name
+    output_file = 'output.mp4'
+    frames = tracking_object_in_frames(temp_path, output_file)
 
-    tracking_object_in_frames(temp_path, '')
+    for frame in frames:
+        st.image(frame, channels="BGR")

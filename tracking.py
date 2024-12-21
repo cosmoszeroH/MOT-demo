@@ -265,8 +265,20 @@ def tracking_object_in_frames(vid_path, out_path, max_age=1, min_hits=3, iou_thr
     color_list = generate_colors()
 
     cap = cv.VideoCapture(vid_path)
+
+    frame_width = int(cap.get(cv.CAP_PROP_FRAME_WIDTH))
+    frame_height = int(cap.get(cv.CAP_PROP_FRAME_HEIGHT))
+    fps = int(cap.get(cv.CAP_PROP_FPS))
+    frame_size = (frame_width, frame_height)
+
+    fourcc = cv.VideoWriter.fourcc(*"mp4v")
+    out = cv.VideoWriter(out_path, fourcc, fps, frame_size)
+
+    frames = []
     while True:
         _, frame = cap.read()
+        if frame is None:
+            break
         total_frames += 1
 
         boxes, confidences, class_ids = detect_object_in_image(detection_model, frame)
@@ -292,20 +304,22 @@ def tracking_object_in_frames(vid_path, out_path, max_age=1, min_hits=3, iou_thr
                 color=color, 
                 thickness=5
             )
-
-        cv.imshow('img', frame)
+        out.write(frame)
+        frames.append(frame)
 
         k = cv.waitKey(30) & 0xff
         if k == 27:
             break
 
     cap.release()
-    cv.destroyAllWindows()
+    out.release()
+
+    return frames
 
 
 if __name__ == "__main__":
     seq_path = r'.\EarthCam.mp4'
-    out_path = r'.\output'
+    out_path = r'output.mp4'
 
     # if not os.path.exists(out_path):
     #     os.makedirs(out_path)
